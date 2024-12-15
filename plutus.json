@@ -1,0 +1,154 @@
+{
+  "preamble": {
+    "title": "rhystmorgan/course",
+    "description": "Aiken contracts for project 'rhystmorgan/course'",
+    "version": "0.0.0",
+    "plutusVersion": "v3",
+    "compiler": {
+      "name": "Aiken",
+      "version": "v1.1.7+e2fb28b"
+    },
+    "license": "Apache-2.0"
+  },
+  "validators": [
+    {
+      "title": "always.always.mint",
+      "redeemer": {
+        "title": "_r",
+        "schema": {
+          "$ref": "#/definitions/Redeemer"
+        }
+      },
+      "compiledCode": "587d01010032323232322533300232323232323253330083370e9000000899251375c601660146ea800854ccc020cdc3a400400226464a66601466e1d2000300b3754601a601c0042944528180600098051baa0021630083754002601260140066010004600e004600e00260086ea8004526136565734aae7555cf2ba15745",
+      "hash": "f1aedddb6b6835ca302d86bcf2393fdb834c087a3d1ed15a41dc6c77"
+    },
+    {
+      "title": "always.always.spend",
+      "datum": {
+        "title": "d",
+        "schema": {
+          "$ref": "#/definitions/cardano~1transaction~1Datum"
+        }
+      },
+      "redeemer": {
+        "title": "_r",
+        "schema": {
+          "$ref": "#/definitions/Redeemer"
+        }
+      },
+      "compiledCode": "587d01010032323232322533300232323232323253330083370e9000000899251375c601660146ea800854ccc020cdc3a400400226464a66601466e1d2000300b3754601a601c0042944528180600098051baa0021630083754002601260140066010004600e004600e00260086ea8004526136565734aae7555cf2ba15745",
+      "hash": "f1aedddb6b6835ca302d86bcf2393fdb834c087a3d1ed15a41dc6c77"
+    },
+    {
+      "title": "always.always.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "compiledCode": "587d01010032323232322533300232323232323253330083370e9000000899251375c601660146ea800854ccc020cdc3a400400226464a66601466e1d2000300b3754601a601c0042944528180600098051baa0021630083754002601260140066010004600e004600e00260086ea8004526136565734aae7555cf2ba15745",
+      "hash": "f1aedddb6b6835ca302d86bcf2393fdb834c087a3d1ed15a41dc6c77"
+    },
+    {
+      "title": "always.alwaysW.withdraw",
+      "redeemer": {
+        "title": "_r",
+        "schema": {
+          "$ref": "#/definitions/Redeemer"
+        }
+      },
+      "compiledCode": "584e010100323232323225333002323232323253330073370e900218041baa0011324a2601460126ea800458c024c02800cc020008c01c008c01c004c010dd50008a4c26cacae6955ceaab9e5742ae89",
+      "hash": "10bb016efd1c9a54227abfb49f57cc1236fc847a3e90a8691d4adc13"
+    },
+    {
+      "title": "always.alwaysW.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "compiledCode": "584e010100323232323225333002323232323253330073370e900218041baa0011324a2601460126ea800458c024c02800cc020008c01c008c01c004c010dd50008a4c26cacae6955ceaab9e5742ae89",
+      "hash": "10bb016efd1c9a54227abfb49f57cc1236fc847a3e90a8691d4adc13"
+    },
+    {
+      "title": "always.vestingTokens.mint",
+      "redeemer": {
+        "title": "_r",
+        "schema": {
+          "$ref": "#/definitions/Redeemer"
+        }
+      },
+      "compiledCode": "58e4010100323232323232322533300232323232323253330083370e9000000899299980499b8748000c028dd519198008009bac300f30103010300c375400c44a66601c0022980103d87a800013322533300d3375e64600260206ea8c004c040dd50019180980099ba548008cc044dd4802a5eb804cdd2a40006602200497ae01330040040013010001301100114a22c6eb8c034c028dd50010a99980419b87480080044c8cc892898070009807180780098051baa00216300837540026016601800660140046012004601200260086ea8004526136565734aae7555cf2ab9f5740ae855d11",
+      "hash": "c8ef59c4ef7f957cd06f1ff50b503428ed6230e3091058941fc06af4"
+    },
+    {
+      "title": "always.vestingTokens.spend",
+      "datum": {
+        "title": "_d",
+        "schema": {
+          "$ref": "#/definitions/cardano~1transaction~1Datum"
+        }
+      },
+      "redeemer": {
+        "title": "_r",
+        "schema": {
+          "$ref": "#/definitions/Redeemer"
+        }
+      },
+      "compiledCode": "58e4010100323232323232322533300232323232323253330083370e9000000899299980499b8748000c028dd519198008009bac300f30103010300c375400c44a66601c0022980103d87a800013322533300d3375e64600260206ea8c004c040dd50019180980099ba548008cc044dd4802a5eb804cdd2a40006602200497ae01330040040013010001301100114a22c6eb8c034c028dd50010a99980419b87480080044c8cc892898070009807180780098051baa00216300837540026016601800660140046012004601200260086ea8004526136565734aae7555cf2ab9f5740ae855d11",
+      "hash": "c8ef59c4ef7f957cd06f1ff50b503428ed6230e3091058941fc06af4"
+    },
+    {
+      "title": "always.vestingTokens.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "compiledCode": "58e4010100323232323232322533300232323232323253330083370e9000000899299980499b8748000c028dd519198008009bac300f30103010300c375400c44a66601c0022980103d87a800013322533300d3375e64600260206ea8c004c040dd50019180980099ba548008cc044dd4802a5eb804cdd2a40006602200497ae01330040040013010001301100114a22c6eb8c034c028dd50010a99980419b87480080044c8cc892898070009807180780098051baa00216300837540026016601800660140046012004601200260086ea8004526136565734aae7555cf2ab9f5740ae855d11",
+      "hash": "c8ef59c4ef7f957cd06f1ff50b503428ed6230e3091058941fc06af4"
+    }
+  ],
+  "definitions": {
+    "Data": {
+      "title": "Data",
+      "description": "Any Plutus data."
+    },
+    "DataHash": {
+      "title": "DataHash",
+      "dataType": "bytes"
+    },
+    "Redeemer": {
+      "title": "Redeemer",
+      "description": "Any Plutus data."
+    },
+    "cardano/transaction/Datum": {
+      "title": "Datum",
+      "description": "An output `Datum`.",
+      "anyOf": [
+        {
+          "title": "NoDatum",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
+        },
+        {
+          "title": "DatumHash",
+          "description": "A datum referenced by its hash digest.",
+          "dataType": "constructor",
+          "index": 1,
+          "fields": [
+            {
+              "$ref": "#/definitions/DataHash"
+            }
+          ]
+        },
+        {
+          "title": "InlineDatum",
+          "description": "A datum completely inlined in the output.",
+          "dataType": "constructor",
+          "index": 2,
+          "fields": [
+            {
+              "$ref": "#/definitions/Data"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
