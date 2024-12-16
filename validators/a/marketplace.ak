@@ -1,18 +1,7 @@
-use cardano/transaction.{Datum, Redeemer, OutputReference, Transaction}
+use cardano/transaction.{OutputReference, Transaction}
 use course/types.{MarketDatum, MarketAction, MBuy, MEdit, MDelist}
 
 // Market Validator Module 1 //
-
-type MarketDatum {
-    price: Int,
-    seller: ByteArray,
-}
-
-type MarketAction {
-    MBuy
-    MEdit { price: Int }
-    MDelist
-}
 
 validator market {
     spend(
@@ -28,7 +17,7 @@ validator market {
 
         when r is {
             MBuy -> True
-            MEdit { price } -> True
+            MEdit { price: _ } -> True
             MDelist -> True
         }
     }
