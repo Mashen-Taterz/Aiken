@@ -1,5 +1,5 @@
 use cardano/transaction.{Datum, Redeemer, OutputReference, Transaction}
-use lib/types.{MarketDatum, MarketAction, MBuy, MEdit, MDelist}
+use course/types.{MarketDatum, MarketAction, MBuy, MEdit, MDelist}
 
 // Market Validator Module 1 //
 
