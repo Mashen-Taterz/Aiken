@@ -1,15 +1,17 @@
 use cardano/transaction.{OutputReference, Transaction}
 use course/types.{MarketDatum, MarketAction, MBuy, MEdit, MDelist}
+use aiken/collection/list
 
 // Market Validator Module 1 //
 
 validator market {
     spend(
-        _d: Option<MarketDatum>,
+        datum: Option<MarketDatum>,
         r: MarketAction,
         _oref: OutputReference,
-        _tx: Transaction,
+        tx: Transaction,
     ) -> Bool {
+        expect Some(d) = datum
         // Sell assets for fixed price ADA
         // Seller can remove assets ( Delist )
         // Seller can update listing ( Edit )
@@ -18,7 +20,10 @@ validator market {
         when r is {
             MBuy -> True
             MEdit { price: _ } -> True
-            MDelist -> True
+            MDelist -> {
+                // Only if signed by Seller
+                list.has(tx.extra_signatories, d.seller)
+            }
         }
     }
 
