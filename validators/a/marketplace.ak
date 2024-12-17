@@ -1,4 +1,4 @@
-use cardano/transaction.{OutputReference, Transaction}
+use cardano/transaction.{InlineDatum, OutputReference, Transaction}
 use course/types.{MarketDatum, MarketAction, MBuy, MEdit, MDelist}
 use aiken/collection/list
 use cardano/address.{VerificationKey}
@@ -10,7 +10,7 @@ validator market {
     spend(
         datum: Option<MarketDatum>,
         r: MarketAction,
-        _oref: OutputReference,
+        oref: OutputReference,
         tx: Transaction,
     ) -> Bool {
         expect Some(d) = datum
@@ -33,7 +33,38 @@ validator market {
                 //Payment value is correct
                 assets.lovelace_of(payment.value) == d.price
             }
-            MEdit { price: _ } -> True
+            MEdit { price } -> {
+                // Change MarketDatum.price -> return to marketplace
+                expect Some(ownInput) = 
+                    list.find(
+                        tx.inputs,
+                        fn(input) {
+                            input.output_reference == oref
+                        }
+                    )
+
+                let ownHash = ownInput.output.address.payment_credential
+
+                // Script Output has same Value as input
+                expect Some(ownOutput) = 
+                    list.find(
+                        tx.outputs,
+                        fn(output) {
+                            output.address.payment_credential == ownHash && output.value == ownInput.output.value
+                        }
+                    )
+
+                // Check output Datum is MarketDatum
+                expect InlineDatum(datum) = ownOutput.datum
+                expect newDatum: MarketDatum = datum
+
+                and {
+                    newDatum.seller == d.seller,
+                    newDatum.price == price,
+                    list.has(tx.extra_signatories, d.seller),
+                }
+            }
+                
             MDelist -> {
                 // Only if signed by Seller
                 list.has(tx.extra_signatories, d.seller)
