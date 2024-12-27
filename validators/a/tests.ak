@@ -1,8 +1,8 @@
 use a/market
 use course/types.{MarketDatum, MBuy}
 use cardano/transaction.{Transaction, Input, Output, OutputReference, NoDatum, InlineDatum, placeholder}
-use cardano/address.{Address, VerificationKey, Script}
 use cardano/assets
+use course/tests as t
 
 // Market Tests //
 
@@ -15,63 +15,42 @@ test marketBuy() {
 
     let marketValue = assets.merge(
         assets.from_lovelace(2),
-        assets.from_asset(#"dead", #"feed", 1)
+        t.makeAsset(#"dead", #"feed", 1)
     )
 
-    let oref = OutputReference {
-        transaction_id: #"cafe",
-        output_index: 1
-    }
+    let oref = t.oref(#"cafe", 1)
 
     let marketIn = 
-        Input {
-            output_reference: oref,
-            output: Output {
-                address: Address {
-                    payment_credential: Script(#"deaf"),
-                    stake_credential: None,
-                },
-                value: marketValue,
-                datum: InlineDatum(marketDatum),
-                reference_script: None
-            }
-        }
+        t.input(oref, t.output(
+            t.scriptAddress(#"deaf"),
+            marketValue,
+            InlineDatum(marketDatum)
+            )
+        )
 
     let buyerIn =
-        Input {
-            output_reference: oref,
-            output: Output {
-                address: Address {
-                    payment_credential: VerificationKey(buyer),
-                    stake_credential: None,
-                },
-                value: assets.from_lovelace(200),
-                datum: NoDatum,
-                reference_script: None
-            }
-        }
+        t.input(
+            t.oref(#"cece", 2),
+            t.output(
+                t.walletAddress(buyer),
+                assets.from_lovelace(200),
+                NoDatum,
+            )
+        )
 
     let buyerOut = 
-        Output {
-            address: Address {
-                payment_credential: VerificationKey(buyer),
-                stake_credential: None
-            },
-            value: marketValue,
-            datum: NoDatum,
-            reference_script: None,
-        }
+        t.output(
+            t.walletAddress(buyer),
+            marketValue,
+            NoDatum,
+        )
 
     let sellerOut =
-        Output {
-            address: Address {
-                payment_credential: VerificationKey(seller),
-                stake_credential: None,
-            },
-            value: assets.from_lovelace(200),
-            datum: NoDatum,
-            reference_script: None
-        }
+        t.output(
+            t.walletAddress(seller),
+            assets.from_lovelace(200),
+            NoDatum,
+        )
 
     let tx = 
         Transaction {
@@ -80,4 +59,12 @@ test marketBuy() {
             outputs: [buyerOut, sellerOut],
         }
     market.market.spend(Some(marketDatum), marketAction, oref, tx)
+}
+
+test marketEdit() {
+    True
+}
+
+test marketDelist() {
+    True
 }
