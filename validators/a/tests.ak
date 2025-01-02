@@ -1,5 +1,5 @@
 use a/market
-use course/types.{MarketDatum, MBuy}
+use course/types.{MarketDatum, MBuy, MEdit, MDelist}
 use cardano/transaction.{Transaction, Input, Output, OutputReference, NoDatum, InlineDatum, placeholder}
 use cardano/assets
 use course/tests as t
@@ -62,9 +62,118 @@ test marketBuy() {
 }
 
 test marketEdit() {
-    True
+    let seller = #"face"
+
+    let marketDatum = MarketDatum { price: 200, seller: seller }
+    let marketAction = MEdit { price: 250 }
+
+    let newDatum = MarketDatum { price: 250, seller: seller }
+
+    let marketValue = assets.merge(
+        assets.from_lovelace(2),
+        t.makeAsset(#"dead", #"feed", 1)
+    )
+
+    let oref = t.oref(#"cafe", 1)
+
+    let marketIn = 
+        t.input(oref, t.output(
+            t.scriptAddress(#"deaf"),
+            marketValue,
+            InlineDatum(marketDatum)
+            )
+        )
+
+    let marketOut = 
+        t.output(
+            t.scriptAddress(#"deaf"),
+            marketValue,
+            InlineDatum(newDatum)
+            )
+
+    let tx = 
+        Transaction {
+            .. placeholder,
+            inputs: [marketIn],
+            outputs: [marketOut],
+            extra_signatories: [seller],
+        }
+    market.market.spend(Some(marketDatum), marketAction, oref, tx)
 }
 
 test marketDelist() {
-    True
+    let seller = #"face"
+
+    let marketDatum = MarketDatum { price: 200, seller: seller }
+    let marketAction = MDelist 
+
+    let marketValue = assets.merge(
+        assets.from_lovelace(2),
+        t.makeAsset(#"dead", #"feed", 1)
+    )
+
+    let oref = t.oref(#"cafe", 1)
+
+    let marketIn = 
+        t.input(oref, t.output(
+            t.scriptAddress(#"deaf"),
+            marketValue,
+            InlineDatum(marketDatum)
+            )
+        )
+
+    let sellerOut = 
+        t.output(
+            t.walletAddress(seller),
+            marketValue,
+            NoDatum
+            )
+
+    let tx = 
+        Transaction {
+            .. placeholder,
+            inputs: [marketIn],
+            outputs: [sellerOut],
+            extra_signatories: [seller],
+        }
+    market.market.spend(Some(marketDatum), marketAction, oref, tx)
+}
+
+test marketDelistfail() fail {
+    let seller = #"face"
+    let buyer = #"beef"
+
+    let marketDatum = MarketDatum { price: 200, seller: seller }
+    let marketAction = MDelist 
+
+    let marketValue = assets.merge(
+        assets.from_lovelace(2),
+        t.makeAsset(#"dead", #"feed", 1)
+    )
+
+    let oref = t.oref(#"cafe", 1)
+
+    let marketIn = 
+        t.input(oref, t.output(
+            t.scriptAddress(#"deaf"),
+            marketValue,
+            InlineDatum(marketDatum)
+            )
+        )
+
+    let sellerOut = 
+        t.output(
+            t.walletAddress(seller),
+            marketValue,
+            NoDatum
+            )
+
+    let tx = 
+        Transaction {
+            .. placeholder,
+            inputs: [marketIn],
+            outputs: [sellerOut],
+            extra_signatories: [buyer],
+        }
+    market.market.spend(Some(marketDatum), marketAction, oref, tx)
 }
