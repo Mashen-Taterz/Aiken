@@ -13,6 +13,7 @@ validator market {
         oref: OutputReference,
         tx: Transaction,
     ) -> Bool {
+        trace @"Spending UTxO ... "
         expect Some(d) = datum
         // Sell assets for fixed price ADA
         // Seller can remove assets ( Delist )
@@ -30,6 +31,8 @@ validator market {
                         }
                     )
                 
+                trace @"Buying asset for": assets.lovelace_of(payment.value)
+
                 //Payment value is correct
                 assets.lovelace_of(payment.value) == d.price
             }
@@ -58,6 +61,9 @@ validator market {
                 expect InlineDatum(datum) = ownOutput.datum
                 expect newDatum: MarketDatum = datum
 
+                trace @"Editing price to": newDatum.price
+
+                //check newDatum values && signature
                 and {
                     newDatum.seller == d.seller,
                     newDatum.price == price,
@@ -66,6 +72,7 @@ validator market {
             }
                 
             MDelist -> {
+                trace @"Delisting assets"
                 // Only if signed by Seller
                 list.has(tx.extra_signatories, d.seller)
             }
