@@ -175,5 +175,5 @@ test marketDelistfail() fail {
             outputs: [sellerOut],
             extra_signatories: [buyer],
         }
-    market.market.spend(Some(marketDatum), marketAction, oref, tx)
+    market.market.spend(Some(marketDatum), marketAction, oref, tx)?
 }
